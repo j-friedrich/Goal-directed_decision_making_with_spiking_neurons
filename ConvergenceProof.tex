@@ -1,0 +1,216 @@
+\documentclass[a4paper,11pt]{article} 
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
+\usepackage{amsmath,bm}%,bbm}
+\usepackage{dsfont}
+%\usepackage{graphicx}
+\usepackage{arydshln}
+
+%\usepackage{xr}
+%\externaldocument{nips}
+
+\newcommand{\vW}{{\mathbf W}}
+\newcommand{\vw}{{\mathbf w}}
+\newcommand{\vu}{{\mathbf u}}
+\newcommand{\vv}{{\mathbf v}}
+\newcommand{\vlambda}{{\bm \lambda}}
+\newcommand{\vX}{{\mathbf X}}
+\newcommand{\vY}{{\mathbf Y}}
+\newcommand{\vA}{{\mathbf A}}
+\newcommand{\vB}{{\mathbf B}}
+\newcommand{\vC}{{\mathbf C}}
+\newcommand{\vD}{{\mathbf D}}
+\newcommand{\vE}{{\mathbf E}}
+\newcommand{\vP}{{\mathbf P}}
+\newcommand{\vM}{{\mathbf M}}
+\newcommand{\vN}{{\mathbf N}}
+\newcommand{\rd}{{\mathrm d}}
+\newcommand{\tV}{{\tilde{V}}}
+
+
+\title{\vspace{-10mm}Goal-Directed Decision Making with Spiking Neurons\\
+-- Convergence Proof --}
+
+
+\author{
+Johannes Friedrich, M\'at\'e Lengyel%\thanks{ Use footnote for providing further information about author (webpage, alternative address)---\emph{not} for acknowledgingfunding agencies.} 
+\\[1ex]
+\small Computational and Biological Learning Laboratory\\
+\small Department of Engineering, University of Cambridge, Cambridge, UK
+}
+
+
+% The \author macro works with any number of authors. There are two commands
+% used to separate the names and addresses of multiple authors: \And and \AND.
+%
+% Using \And between authors leaves it to \LaTeX{} to determine where to break
+% the lines. Using \AND forces a linebreak at that point. So, if \LaTeX{}
+% puts 3 of 4 authors names on the first line, and the last on the second
+% line, try using \AND instead of \And before the third author name.
+
+\newcommand{\fix}{\marginpar{FIX}}
+\newcommand{\new}{\marginpar{NEW}}
+
+%\nipsfinalcopy % Uncomment for camera-ready version
+
+\begin{document}
+
+
+\maketitle
+
+
+In the main text we have shown that at the fixed point(s) the neural activity is, up to constants, the solution of the Bellman optimality equation. Here we proof convergence to such a fixed point for $\gamma<1$.
+To reduce notational clutter, without loss of generality we set the constants $k$ and $\lambda_{\rm r}$ equal to $1$ and $\theta$ to $0$, which just amounts to using appropriate units. In the dynamics $\tau_{\rm m} \dot \vu = -\vu + \vW\vlambda-\eta\,\vlambda + \vw^{\rm r}$ (Eq.~5, main text) $\vlambda$ depends implicitly on $\vu$. An equivalent explicit expression is
+\begin{equation}
+ \tau_{\rm m} \dot \vu =  (\vW^\eta(\vu)-\mathds{1}) \vu + \vw^{\rm r}= \vX(\vu)\vu + \vw^{\rm r}. \label{eq:dynamicA}
+\end{equation}
+Here we defined a new set of effective weights $\vW^\eta(\vu)$, obtained by taking the matrix $\vW-\eta\mathds{1}$ and setting column $i$ to zero if $u_i<0$, and defined $\vX(\vu):= \vW^\eta(\vu)-\mathds{1}$. Within each orthant of $\vu$-space the matrix $\vW^\eta(\vu)$ is constant and the dynamics described by a linear ODE with solution
+\begin{equation}
+ \vu(t) = e^{\vX (t-t')/\tau_{\rm m}}\vu(t') + \int_{t'}^t e^{\vX (t-\tau)/\tau_{\rm m}}\vw^{\rm r} \rd\tau,
+\end{equation}
+where $t'$ is the time of initiation or when $\vu$ entered the orthant. 
+
+We proceed to show that no eigenvalue $\mu$ of $\vX(\vu)$ has positive real part for any $\vu$.
+We arrange the matrices blockwise with actions varying within and states between blocks. Using abusive but concise notation, we write for the transition probability $P(s'|s,a)= p_{ij}$ with indices $i=As+a$ and $j=s'$, where $a\in\{1,2,...,A\}$ and $s \in\{1,2,...,S\}$. This also defines the matrix $\vP=(p_{ij})$. Let further $\vE=(e_{ij})$ be the $SA\times S$ matrix with $e_{ij}=1$ if $i\in\{(j-1)A+1,...,jA\}$, i.e.\ $s=s'$, else $0$. 
+If $u_i\geq0$ for all $i$ then the matrix $\vX$, which we denote in this case by $\vX^{\!+}$, can be expressed based on Eq.~(7-9, main text) as $\vX^{\!+}=(1+\eta)(\gamma\vP-\vE)\vE^T$. For the sake of illustration, e.g.\ with $S=A=2$ and $\eta=0$ one has:
+\footnotesize%\scriptsize
+%\small
+\setlength{\arraycolsep}{3pt}
+$$
+\overbrace{
+\left(
+\begin{array}{cc:cc}
+ \gamma p_{11}-1& \gamma  p_{11}-1 & \gamma p_{12}   & \gamma p_{12}  \\
+ \gamma p_{21}-1& \gamma  p_{21}-1 & \gamma p_{22}   & \gamma p_{22}  \\ \hdashline
+ \gamma p_{31}  & \gamma  p_{31}   & \gamma p_{32}-1 & \gamma p_{32}-1\\
+ \gamma p_{41}  & \gamma  p_{41}   & \gamma p_{42}-1 & \gamma p_{42}-1
+\end{array}
+\right)}^{\vX^{\!+}}
+=
+\underbrace{
+\left(
+ \vphantom{\begin{array}{c}\\\\\\\\\end{array}}
+\right.\!\!\left.
+\gamma
+\overbrace{
+\left(
+\begin{array}{cc}
+ p_{11} &  p_{12} \\
+ p_{21} &  p_{22} \\
+ p_{31} &  p_{32} \\
+ p_{41} &  p_{42}
+\end{array}
+\right)}^{\vP}
+-
+\overbrace{
+\left(
+\begin{array}{cc}
+  1 & 0 \\
+  1 & 0 \\
+  0 & 1 \\
+  0 & 1
+\end{array}
+\right)}^{\vE}
+\right.\!\!\left.
+\vphantom{\begin{array}{c}\\\\\\\\\end{array}}
+\right)
+}_{\vC}
+\overbrace{
+\left(
+\begin{array}{cccc}
+  1 & 1 & 0 & 0 \\
+  0 & 0 & 1 & 1
+\end{array}
+\right) }^{\vE^T},
+$$
+\normalsize
+where we newly defined the matrix $\vC$. The columns in each $A\times A$-block are identical, hence $S(A-1)$ eigenvalues are zero. %A possible choice of eigenvectors are vectors with one $1$ and one $-1$ within one `block' and zeros elsewhere.
+In general, not all $u_i$ are greater or equal zero, but some entries are negative. Let $Z$ denote their index set. Therefore the columns of $\vW^\eta(\vu)$ with indices $z$ in $Z$ are zero and the respective columns in $\vX(\vu)$ have the entry $-1$ on the diagonal, $a_{zz}=-1$, and zeros elsewhere.
+By inspection $\vX(\vu)$ has eigenvalue $\mu=-1$ with multiplicity $|Z|$ and eigenvectors with components $v_i=\delta_{iz}$. Characteristic of these negative eigenvalues is the exponential decay towards the fixed point, as seen in Fig.~2F, main text.
+
+It will turn out useful to consider matrices $\vB(\vu)$ where these diagonal elements are also set to zero. In order to see, how this affects the eigenvalues, imagine deriving the characteristic polynomial using the Laplace expansion of the determinant on the considered columns. For the original matrix $\vX(\vu)$ the characteristic polynomial is $\det(\vX(\vu)-\mu\mathds{1})=(-1-\mu)M_{zz}$ with some minor $M_{zz}$. Setting the diagonal entry in the considered column to zero we obtain $(0-\lambda)M_{zz}$ with the same minor $M_{zz}$, hence one eigenvalue changes from $-1$ to $0$ whereas the others remain the same. Sequentially setting all $|Z|$ diagonal entries $a_{zz}$ to zero yields $\vB(\vu)$. In summary, the already found eigenvalue $-1$ with multiplicity $|Z|$ changes to an eigenvalue $0$ with multiplicity $|Z|$, but all other eigenvalues, the ones we are still looking for, are left invariant. %It remains to show, that non of these other non-trivial eigenvalues has positive real part.
+
+The idea behind introducing $\vB(\vu)$ and underlying the following is that $\vB(\vu)$ has low rank, can be expressed as a product of the $SA\times S$ matrix $\vC$ and a $S\times SA$ matrix $\vD(\vu)$, and the non-zero eigenvalues of $\vC\vD(\vu)$ are the eigenvalues of $\vD(\vu)\vC$.
+Let $\vD(\vu)$ be obtained by setting columns of $\vE^T$ with indices in $Z$ to zero. With this definitions we have $\vB(\vu) = (1+\eta) \vC \vD(\vu)$. 
+We are interested in the eigenvalues of $\vY:=\vD(\vu)(\gamma\vP-\vE)$, where we dropped the constant prefactor $1+\eta$, which is positive by assumption and thus does not affect the sign of the eigenvalues. Assuming e.g.\ $Z=\{2\}$ our example reads:
+\footnotesize%\scriptsize
+%\small
+\setlength{\arraycolsep}{3pt}
+$$
+\overbrace{
+\left(
+\begin{array}{cccc}
+  1 & 0 & 0 & 0 \\
+  0 & 0 & 1 & 1
+\end{array}
+\right) }^{\vD(\vu)}
+\left(
+ \vphantom{\begin{array}{c}\\\\\\\\\end{array}}
+\right.\!\!\left.
+\gamma
+\overbrace{
+\left(
+\begin{array}{cc}
+ p_{11} &  p_{12} \\
+ p_{21} &  p_{22} \\
+ p_{31} &  p_{32} \\
+ p_{41} &  p_{42}
+\end{array}
+\right)}^{\vP}
+-
+\overbrace{
+\left(
+\begin{array}{cc}
+  1 & 0 \\
+  1 & 0 \\
+  0 & 1 \\
+  0 & 1
+\end{array}
+\right)}^{\vE}
+\right.\!\!\left.
+\vphantom{\begin{array}{c}\\\\\\\\\end{array}}
+\right)
+=
+\overbrace{
+\left(
+\begin{array}{cc}
+ \gamma p_{11}-1 & \gamma p_{12} \\
+ \gamma (p_{31} +p_{41}) & \gamma (p_{32} +p_{42})-2
+\end{array}
+\right)
+}^{\vY}
+$$
+\normalsize
+The effect of left-multiplication with $\vD(\vu)$ is the summation of the $A$ rows corresponding to one state and all possible actions but skipping rows with index in $Z$. 
+Note that, summarising the approximate values (i.e.\ the summed up activity over all possible actions for each state $\tV(s)+V_0=\sum_{i|s_i=s} \lambda_i$) in one vector $\vv=(\tV(1)+V_0,...,\tV(S)+V_0)^T$, the resulting matrix $\vY$ has following interpretation: it is the matrix in the linear ODE $\tau_{\rm m}\dot{\vv} = \vY \vv + \vw^{\rm v}$ describing the evolution of the approximate values. (The details of $\vw^{\rm v}$ are not relevant.)
+$\vY$ has non-positive diagonal entries and non-negative entries elsewhere. Its row sums are in $(\gamma-1)\{0,1,...,A\}$ because all row sums of $\gamma\vP-\vE$ are  $\gamma-1$ by construction as $\sum_j p_{ij}=\sum_{s'}P(s'|s,a)=1$.
+Hence the matrix $\vY$ can be written as $A(\vM-\mathds{1})$ where $\vM$ is a non-negative matrix with $\gamma\leq\sum_j m_{ij}\leq1$ for all $i$. According to the Perron-Frobenius theorem \cite{Perron1907} or the Gershgorin circle theorem \cite{Gerschgorin1931}, all eigenvalues $\mu$ of $\vM$ have absolute values $|\mu|\leq\max_i\sum_j m_{ij}$, hence $|\mu|\leq1$. The eigenvectors of $\vM$ are also eigenvectors of the identity matrix with eigenvalue $1$. Thus the eigenvalues of $\vM-\mathds{1}$ are $\mu-1$ and none has positive real part.
+
+% \begin{figure}
+% \centering
+%  \includegraphics[height=40mm]{mytask/uMF2_cb}
+%  \caption{Example task from Fig.~\ref{fig:mytask}, main paper. Voltage traces for rate neurons (solid) with random initial values. Summed up activities $\sum_a \lambda_{sa}$ (various linestyles) converge to the optimal values.}
+% \label{fig:app}
+% \end{figure}
+
+Thus far, we have proven that none of the eigenvalues of $\vX(\vu)$ has positive real part. However, some are identical zero and we still have to rule out linear divergence driven by $\vw^{\rm r}$, cf.\ Eq.~(\ref{eq:dynamicA}). Indeed, such a linear increase is observed in Fig.~2F of the main text for the activity of the blue coloured neuron, but only in some finite interval until the orthant of $\vu$ changes. 
+
+To rule out divergence to $+\infty$ we consider the summed up activity over all possible actions for each state, $\tV(s)$. As pointed out, its dynamics is captured by $\vY$, which has no positive eigenvalues. By inspection we see, that $\vY$ has an eigenvalue zero only if none of the neurons within one block of $\vX$ is active, $\exists \hat{s}\forall i|s_i=\hat{s}: u_i\leq0$, hence $\tV(\hat{s})=-V_0<\infty$. The corresponding row and column of $\vY$ with index $\hat{
+s}$ contains only zeros. It does not interact with the other approximate values $\tV(s\neq\hat{s})$ and can be removed to obtain a smaller matrix for the dynamics of $\tV(s\neq\hat{s})$. The resulting matrix can be written as $A(\vN-\mathds{1})$ where $\vN$ is a non-negative matrix with $\sum_j n_{ij}<1$ for all $i$ if $\gamma<1$. Thus the eigenvalues of $\vN-\mathds{1}$ have strictly negative real part and $\tV(s\neq\hat{s})$ converges. 
+Because activities are positive and the summed up activity converges, the individual summands cannot diverge either. They also don't oscillate while keeping the sum at its asymptotic value showing limit cycle or limit torus behaviour, because the matrix $\vX$ doesn't have pure imaginary eigenvalues. 
+
+Next we rule out divergence to $-\infty$. A  neuron $i$ with negative membrane potential $u_i$ does not spike, $\lambda_i=0$. Its total input $I_i^{\rm tot}=\vw_i\vlambda + \vw_i^{\rm r}$ (cf.\ Eq.~5, main text), due to other neurons' spiking activity and the external input, can be negative. However, it is bounded, because we have already established that activities cannot diverge, and it further does not depend on $u_i$. Due to the presence of the leak term in the neural dynamics $\tau_{\rm m}\dot{u}_i = -u_i + I_i^{\rm tot}$ the membrane potential converges to  $I_i^{\rm tot}>-\infty$.
+
+Taken together, we have successfully proven convergence of $\vu$.
+
+
+\subsubsection*{References}
+%\renewcommand{\refname}{}
+{\def\section*#1{}
+\small
+%\bibliographystyle{ieeetr}
+\bibliographystyle{unsrt}
+\bibliography{ConvergenceProof}
+}
+
+
+\end{document}
