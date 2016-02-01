@@ -61,7 +61,7 @@ pl.xlabel('Time [ms]')
 pl.ylabel('Performance')
 simpleaxis(pl.gca())
 pl.tight_layout(0)
-pl.savefig('fig/performance.pdf', dpi=600)
+pl.savefig('performance.pdf', dpi=600)
 
 
 # learning via parallel sampling
@@ -91,4 +91,4 @@ pl.xlabel('Trials')
 pl.ylabel('Performance')
 simpleaxis(pl.gca())
 pl.tight_layout(0)
-pl.savefig('fig/learn_performance.pdf', dpi=600)
+pl.savefig('learn_performance.pdf', dpi=600)

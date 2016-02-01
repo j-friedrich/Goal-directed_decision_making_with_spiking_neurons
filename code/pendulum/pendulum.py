@@ -120,7 +120,7 @@ cb.set_label('obtained Value')
 cb.set_ticks([0, 5 * int(round(.1 / (1 - gamma))), 10 * int(round(.1 / (1 - gamma)))])
 cb.set_ticklabels([0, 5 * int(round(.1 / (1 - gamma))), 10 * int(round(.1 / (1 - gamma)))])
 pl.subplots_adjust(.17, .25, .94, .94)
-pl.savefig('fig/value_obt.pdf', dpi=600)
+pl.savefig('value_obt.pdf', dpi=600)
 
 
 # R0 = np.mean([np.dot(map(get_R4pv, get_path_rnd(np.zeros(net.K), initpv=valley,
@@ -163,7 +163,7 @@ pl.xlabel('Time [ms]')
 pl.ylabel('Performance')
 simpleaxis(pl.gca())
 pl.tight_layout(0)
-pl.savefig('fig/performance.pdf', dpi=600)
+pl.savefig('performance.pdf', dpi=600)
 
 
 # plot value:
@@ -196,7 +196,7 @@ cb.set_label('obtained Value')
 cb.set_ticks([0, 5 * int(round(.1 / (1 - gamma))), 10 * int(round(.1 / (1 - gamma)))])
 cb.set_ticklabels([0, 5 * int(round(.1 / (1 - gamma))), 10 * int(round(.1 / (1 - gamma)))])
 pl.subplots_adjust(.17, .25, .94, .94)
-pl.savefig('fig/value_obt.pdf', dpi=600)
+pl.savefig('value_obt.pdf', dpi=600)
 
 
 # plot policy:
@@ -232,7 +232,7 @@ cb.set_ticklabels([r'$-$', 0, '$+$'])
 plot_path(y.mean(0), valley, 150,
           color=[pl.cm.Greys(i) for i in np.linspace(0, 0.99, 151)], linewidths=4)
 pl.subplots_adjust(.18, .25, .95, .94)
-pl.savefig('fig/policy.pdf', dpi=600)
+pl.savefig('policy.pdf', dpi=600)
 
 
 ## learning via parallel sampling ##
@@ -265,7 +265,7 @@ pl.xlabel('Trials')
 pl.ylabel('Performance')
 simpleaxis(pl.gca())
 pl.tight_layout(0)
-pl.savefig('fig/learn_performance.pdf', dpi=600)
+pl.savefig('learn_performance.pdf', dpi=600)
 
 
 # initialize our network at two different points in the state space of its neural
@@ -295,7 +295,7 @@ pl.xlabel('Time [ms]')
 pl.ylabel('Value', labelpad=-5)
 simpleaxis(pl.gca())
 pl.subplots_adjust(.19, .22, .99, .99)
-pl.savefig('fig/value.pdf', dpi=600)
+pl.savefig('value.pdf', dpi=600)
 pl.xlim([0, 25 / step])
 pl.xticks([0, 10 / step, 20 / step], [0, 10, 20])
 pl.yticks([1, 2], [1, 2])
@@ -304,7 +304,7 @@ pl.xlabel('')
 pl.ylabel('')
 pl.gcf().set_size_inches(4, 3)
 pl.subplots_adjust(.09, .17, .99, .99)
-pl.savefig('fig/value2.pdf', dpi=600, transparent=True)
+pl.savefig('value2.pdf', dpi=600, transparent=True)
 
 
 from scipy.signal import medfilt
@@ -325,7 +325,7 @@ pl.xlabel('Time [ms]')
 pl.ylabel('Firing rate [kHz]')
 simpleaxis(pl.gca())
 pl.subplots_adjust(.17, .22, .99, .99)
-pl.savefig('fig/rate.pdf', dpi=600)
+pl.savefig('rate.pdf', dpi=600)
 pl.xlim([0, 25 / step])
 pl.xticks([0, 10 / step, 20 / step], [0, 10, 20])
 pl.ylim(-.005, .6)
@@ -334,4 +334,4 @@ pl.xlabel('')
 pl.ylabel('')
 pl.gcf().set_size_inches(4, 3)
 pl.subplots_adjust(.2, .17, .99, .99)
-pl.savefig('fig/rate2.pdf', dpi=600, transparent=True)
+pl.savefig('rate2.pdf', dpi=600, transparent=True)
