@@ -65,16 +65,16 @@ pl.savefig('performance.pdf', dpi=600)
 
 
 # learning via parallel sampling
-eta, T, r0 = .01, 1000, 0
+eta, T, r0 = .05, 1000, 0
 try:
     perf = np.load('results/learn_performance.npy')
 except IOError:
     try:
         rew = np.load('results/learn.npz')['R']
     except IOError:
-        res = np.array([net.parallel_sampling_keepU(step, eta, run, rate, T,
-                                                    r0=r0, reset=ref, steps=100,
-                                                    start_state=net.pstart_state)
+        res = np.array([net.parallel_sampling_keepU(step, eta, run, rate, T, r0=r0,
+                                                    reset=ref, gamma=gamma, steps=100,
+                                                    epsilon=.0001, max_iter=10**3)
                         for run in range(10)])
         np.savez_compressed('results/learn.npz', Pi=res[:, 0], R=res[:, 1],
                             DKL=res[:, 2], RMSE=res[:, 3], W=res[:, 4])
