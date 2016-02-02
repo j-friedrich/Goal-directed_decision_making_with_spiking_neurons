@@ -56,7 +56,7 @@ class NetPop(DPNetPop):
         for f0 in [0, 1]:
             for f1 in [0, 1]:
                 for f2 in [0, 1]:
-                    reward_sizes[self.get_state_nr([0, 6], [f0, f1, f2])] = (f0 + f1 + f2) / 3.
+                    reward_sizes[self.get_state_nr([0, 6], [f0, f1, f2])] = (f0 + f1 + f2)
                     transition_cpt[self.get_state_nr([0, 6], [f0, f1, f2])] *= 0
         DPNetPop.__init__(self, transition_cpt, reward_cpt, pop_size, reward_sizes, set_W)
 

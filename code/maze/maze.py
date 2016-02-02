@@ -31,7 +31,7 @@ Rmax = net.calc_Qvalue(gamma).max(axis=1)[0]
 
 ref = 20
 step = .2
-rate = 1200  # 400*3, factor 3, cause rewards have been scaled by this factor
+rate = 400
 
 ## offline ##
 try:
