@@ -26,6 +26,6 @@ setup(ext_modules=cythonize("*.pyx"),
 with cd("pendulum"):
     setup(ext_modules=cythonize("*.pyx"),
           include_dirs=[np.get_include()])
-# with cd("2AFC"):
-# 	setup(ext_modules=cythonize("*.pyx"),
-# 		  include_dirs=[np.get_include()])
+with cd("2AFC"):
+    setup(ext_modules=cythonize("*.pyx"),
+          include_dirs=[np.get_include()])
