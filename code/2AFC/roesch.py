@@ -6,9 +6,8 @@ import pylab as pl
 from sys import path, argv
 path.append('../')
 from NetPop import NetPop
-from scipy.signal import convolve
 from run import run
-from functions import simpleaxis
+from functions import simpleaxis, smooth_spikes
 
 savefig = False if len(argv) == 1 else True
 
@@ -24,13 +23,6 @@ pl.rc('ytick.major', size=10, width=1.5)
 # colors for colorblind from  http://www.cookbook-r.com/Graphs/Colors_(ggplot2)/
 col = ["#009E73", "#0072B2", "#D55E00", "#E69F00",
        "#56B4E9", "#F0E442", "#CC79A7", "#999999"]
-
-
-def smooth_spikes(spikes, sigma, step):
-    return convolve(spikes, [1. / np.sqrt(2 * np.pi) / sigma * 1000
-                             * np.exp(-i**2 / (2 * (sigma / step)**2))
-                             for i in range(int(-5 * sigma / step),
-                                            int(5 * sigma / step + 1))], 'same')
 
 
 def sim(u0, rate, reset, tm, th, rb, r0, r1, r2, rp, tmean, tsigma, ir, runs):
@@ -58,7 +50,7 @@ def sim(u0, rate, reset, tm, th, rb, r0, r1, r2, rp, tmean, tsigma, ir, runs):
 
 
 # sim:
-res = sim(1.8, 450, 0, 50, 1.65, 0, 2 * 0.28, 2 * 0.33, 2 * 0.43, 5.2, 95, 30, 22, 30)
+res = sim(1.8, 450, 0, 50, 1.65, 0, .56, .66, .86, 5.2, 95, 30, 22, 30)
 
 
 fig = pl.figure()
@@ -105,6 +97,6 @@ lg2 = pl.legend([p3, p4, p5, p6], [r'$r_A = 3$', r'$r_A = 1$', 'A', 'B'],
 lg2.draw_frame(False)
 
 if savefig:
-    pl.savefig('fig/Roesch.pdf', dpi=600)
+    pl.savefig('Roesch.pdf', dpi=600)
 else:
     pl.show()

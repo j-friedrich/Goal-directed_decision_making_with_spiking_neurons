@@ -85,7 +85,6 @@ class DPNetPop(object):
                     else:
                         self.W[self.sa[i, j, m], self.r] = rew  # sa to r
 
-
     def calc_Qvalue(self, gamma=1, accuracy=1e-20, max_iter=None):
         Q = np.zeros(np.shape(self.reward_cpt)[:2])
         # terminal states
@@ -333,7 +332,6 @@ class DPNetPop(object):
         term = np.mean(np.reshape(pTerminal, (self.pop_size, -1)), axis=0)
         transT = np.array([[np.append(self.transition_cpt[s, a], 1 - np.sum(self.transition_cpt[s, a]))
                             for a in range(self.num_actions)] for s in range(self.num_states)])
-        # max in next line to avoid negative probs if sum of infered probs is (numerically)>1
         tT = np.array([[np.append(t[s, a], term[self.sa[s, a]])
                         for a in range(self.num_actions)] for s in range(self.num_states)])
         rf = np.reshape(r, -1)
@@ -371,7 +369,6 @@ class DPNetPop(object):
         term = np.mean(np.reshape(pTerminal, (self.pop_size, -1)), axis=0)
         transT = np.array([[np.append(self.transition_cpt[s, a], 1 - np.sum(self.transition_cpt[s, a]))
                             for a in range(self.num_actions)] for s in range(self.num_states)])
-        # max in next line to avoid negative probs if sum of infered probs is (numerically)>1
         tT = np.array([[np.append(t[s, a], term[self.sa[s, a]])
                         for a in range(self.num_actions)] for s in range(self.num_states)])
         rf = np.reshape(r, -1)

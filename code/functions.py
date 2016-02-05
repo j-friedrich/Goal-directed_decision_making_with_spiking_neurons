@@ -1,5 +1,6 @@
 import numpy as np
 import pylab as pl
+from scipy.signal import convolve
 
 
 def simpleaxis(ax):
@@ -21,3 +22,10 @@ def errorfill(x, y, yerr, color=None, alpha_fill=0.3, ax=None):
         ymin, ymax = yerr
     ax.plot(x, y, color=color)
     ax.fill_between(x, ymax, ymin, color=color, alpha=alpha_fill)
+
+
+def smooth_spikes(spikes, sigma, step):
+    return convolve(spikes, [1. / np.sqrt(2 * np.pi) / sigma *
+                             1000 * np.exp(-i ** 2 / (2 * (sigma / step) ** 2))
+                             for i in range(int(-5 * sigma / step),
+                                            int(5 * sigma / step + 1))], 'same')

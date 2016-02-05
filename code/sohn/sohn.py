@@ -1,10 +1,9 @@
 import numpy as np
 import pylab as pl
-from scipy.signal import convolve
 from sys import argv, path
 path.append('../')
 from NetPop import NetPop, NetPopPredict
-from functions import simpleaxis
+from functions import simpleaxis, smooth_spikes
 
 savefig = False if len(argv) == 1 else True
 
@@ -54,12 +53,6 @@ def runpopU(W, uinit, step, pop_size, rate=100,
             (.1 + .65 * np.exp(-(t * step - 250) ** 2 / tau_r ** 2))
         spikes[t] = np.random.rand(K) < step * u
     return spikes, u
-
-
-def smooth_spikes(spikes, sigma, step):
-    return convolve(spikes, [1. / np.sqrt(2 * np.pi) / sigma * 1000 *
-                             np.exp(-i ** 2 / (2 * (sigma / step) ** 2)) for i in
-                             range(int(-5 * sigma / step), int(5 * sigma / step + 1))], 'same')
 
 
 def simulate(seed, na=2, rate=100, predict=False):

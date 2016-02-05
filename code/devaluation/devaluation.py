@@ -1,11 +1,9 @@
 import numpy as np
 import pylab as pl
-from scipy.signal import convolve
-from sys import argv
-from sys import path
+from sys import path, argv
 path.append('../')
 from NetPop import NetPop
-from functions import simpleaxis
+from functions import simpleaxis, smooth_spikes
 
 savefig = False if len(argv) == 1 or int(argv[1]) == 0 else True
 deval = False if len(argv) < 3 else True
@@ -45,12 +43,6 @@ def runU(W, uinit, step, rate=100, T=700, tm=50, ts=2, reset=3, delay=0):
             (.1 + .65 * np.exp(-(t * step - 250) ** 2 / tau_r ** 2))
         spikes[t] = np.random.rand(K) < step * u
     return spikes
-
-
-def smooth_spikes(spikes, sigma, step):
-    return convolve(spikes, [1. / np.sqrt(2 * np.pi) / sigma * 1000 *
-                             np.exp(-i ** 2 / (2 * (sigma / step) ** 2)) for i in
-                             range(int(-5 * sigma / step), int(5 * sigma / step + 1))], 'same')
 
 
 def accumulate(values, start=0):

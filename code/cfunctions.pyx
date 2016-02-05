@@ -13,10 +13,10 @@ def run(np.ndarray[DTYPE_t, ndim=2] W, double step, int rate=100,
     srand(seed)
     cdef int K = len(W)
     cdef np.ndarray[DTYPE_t, ndim = 2, negative_indices = False, mode = 'c']\
-        spikes = np.zeros((T / step, K))
+        spikes = np.zeros((int(T / step), K))
     spikes[0, K - 1] = 1
     cdef np.ndarray[DTYPE_t, ndim = 2, negative_indices = False, mode = 'c']\
-        u = np.zeros((T / step, K))
+        u = np.zeros((int(T / step), K))
     cdef double fs = np.exp(-step / ts)  # decay factor synapse
     cdef double fm = np.exp(-step / tm)  # decay factor membrane
     # combine factor to save computing time
@@ -61,7 +61,7 @@ def runpop_js(np.ndarray[DTYPE_t, ndim=2] W, double step, int pop_size, int rate
     srand(seed)
     cdef int K = len(W)
     cdef np.ndarray[DTYPE_t, ndim = 2, negative_indices = False, mode = 'c']\
-        spikes = np.zeros((T / step, K))
+        spikes = np.zeros((int(T / step), K))
     spikes[0, K - pop_size:] = 1
     cdef np.ndarray[DTYPE_t, ndim = 1, negative_indices = False, mode = 'c']\
         u = np.zeros(K)
@@ -106,7 +106,7 @@ def runpopU_js(np.ndarray[DTYPE_t, ndim=2] W, np.ndarray[DTYPE_t, ndim=1] uinit,
     srand(seed)
     cdef int K = len(W)
     cdef np.ndarray[DTYPE_t, ndim = 2, negative_indices = False, mode = 'c']\
-        spikes = np.zeros((T / step, K))
+        spikes = np.zeros((int(T / step), K))
     spikes[0, K - pop_size:] = 1
     cdef np.ndarray[DTYPE_t, ndim = 1, negative_indices = False, mode = 'c']\
         u = np.zeros(K)
