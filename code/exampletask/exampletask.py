@@ -3,25 +3,17 @@ import pylab as pl
 from sys import argv
 from Net import Net
 import cfunctions as cfn
-from functions import simpleaxis
+from functions import simpleaxis, init_fig
 
 savefig = False if len(argv) == 1 else True
 
 net = Net()
 step = .1
 
-
-pl.rc('figure', facecolor='white', dpi=90)
-pl.rc('lines', lw=4)
-pl.rc('font', size=44, **{'family': 'sans-serif', 'sans-serif': ['Computer Modern']})
-pl.rc('text', usetex=True)
-pl.rc('legend', **{'fontsize': 36})
-pl.rc('axes', linewidth=2)
-pl.rc('xtick.major', size=10, width=1.5)
-pl.rc('ytick.major', size=10, width=1.5)
-
+init_fig()
 # colors for colorblind from  http://www.cookbook-r.com/Graphs/Colors_(ggplot2)/
-col = ['#56B4E9', '#0072B2',  '#F0E442', '#E69F00', '#CC79A7', '#D55E00', '#40e0d0', '#009E73']
+col = ['#56B4E9', '#0072B2',  '#F0E442', '#E69F00',
+       '#CC79A7', '#D55E00', '#40e0d0', '#009E73']
 
 
 # Voltage

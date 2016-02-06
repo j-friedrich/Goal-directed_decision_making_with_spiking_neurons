@@ -10,18 +10,9 @@ import random
 from NetPop import NetPop
 import integrate2d as cf
 import cfunctions as cfn
-from functions import simpleaxis, errorfill
+from functions import simpleaxis, errorfill, init_fig
 
-
-pl.rc('figure', facecolor='white', dpi=90, frameon=False)
-pl.rc('font', size=44, **{'family': 'sans-serif', 'sans-serif': ['Computer Modern']})
-pl.rc('lines', lw=4)
-pl.rc('text', usetex=True)
-pl.rc('legend', **{'fontsize': 36})
-pl.rc('axes', linewidth=2)
-pl.rc('xtick.major', size=10, width=1.5)
-pl.rc('ytick.major', size=10, width=1.5)
-
+init_fig()
 # colors for colorblind from  http://www.cookbook-r.com/Graphs/Colors_(ggplot2)/
 col = ['#56B4E9', '#E69F00', '#CC79A7', '#009E73']
 

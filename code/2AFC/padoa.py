@@ -19,23 +19,13 @@ from NetPop import NetPop
 from scipy.special import erfinv
 from scipy.optimize import curve_fit
 from runPadoa import run
-from functions import simpleaxis, smooth_spikes
+from functions import simpleaxis, smooth_spikes, accumulate, init_fig
 
 
 savefig = False if len(argv) == 1 else True
 
-pl.rc('figure', facecolor='white', dpi=90, frameon=False)
-pl.rc('font', size=44, **{'family': 'sans-serif',
-                          'sans-serif': ['Computer Modern']})
-pl.rc('lines', lw=4)
-pl.rc('text', usetex=True)
-pl.rc('legend', **{'fontsize': 32})
-pl.rc('axes', linewidth=2)
-pl.rc('xtick.major', size=10, width=1.5)
-pl.rc('ytick.major', size=10, width=1.5)
-
-# colors for colorblind from
-# http://www.cookbook-r.com/Graphs/Colors_(ggplot2)/
+init_fig()
+# colors for colorblind from http://www.cookbook-r.com/Graphs/Colors_(ggplot2)/
 col = ["#009E73", "#0072B2", "#D55E00", "#E69F00",
        "#56B4E9", "#F0E442", "#CC79A7", "#999999"]
 col2 = map(tuple, [np.array([.902, .624, 0]) +
@@ -73,12 +63,6 @@ def sim(u0, rate, reset, tm, offers, ratio, tdec, trise, tdly,
                              tdec=tdec, trise=trise, tdly=tdly, rb=rb, V0=V0, gamma=gamma)
                          for i in range(runs)])
     return s
-
-
-def accumulate(values, start=0):
-    for v in values:
-        start += v
-        yield start
 
 
 def get_t(x):

@@ -3,25 +3,15 @@ import pylab as pl
 from sys import argv, path
 path.append('../')
 from NetPop import NetPop, NetPopPredict
-from functions import simpleaxis, smooth_spikes
+from functions import simpleaxis, smooth_spikes, accumulate, init_fig
 
 savefig = False if len(argv) == 1 else True
 
-pl.rc('figure', facecolor='white', dpi=90, frameon=False)
-pl.rc('font', size=44, **{'family': 'sans-serif', 'sans-serif': ['Computer Modern']})
-pl.rc('lines', lw=4)
-pl.rc('text', usetex=True)
+init_fig()
 pl.rc('legend', **{'fontsize': 30})
-pl.rc('axes', linewidth=2)
-pl.rc('xtick.major', size=10, width=1.5)
-pl.rc('ytick.major', size=10, width=1.5)
-
-
-# colors for colorblind from
-# http://www.cookbook-r.com/Graphs/Colors_(ggplot2)/
+# colors for colorblind from http://www.cookbook-r.com/Graphs/Colors_(ggplot2)/
 colRT = ["#009E73", "#0072B2", "#D55E00", "#E69F00",
          "#56B4E9", "#F0E442", "#CC79A7", "#999999"]
-
 # orange to green to cyan:
 col = map(tuple, [np.array([.902, .624, 0]) +
                   (np.array([0, .62, .451]) -
@@ -76,12 +66,6 @@ def simulate(seed, na=2, rate=100, predict=False):
                                        for i in range(popsize)]), axis=0)
                      for j in range(len(W) - na - 1, len(W) - 8 * na - 2, -na)])[:, 250 / step:750 / step]
     return [np.array(map(np.argmax, tmp)) * step, tmp, tmp2, s]
-
-
-def accumulate(values, start=0):
-    for v in values:
-        start += v
-        yield start
 
 
 def get_t(x, c):

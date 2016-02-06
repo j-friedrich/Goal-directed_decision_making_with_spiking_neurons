@@ -3,23 +3,17 @@ import pylab as pl
 from sys import path, argv
 path.append('../')
 from NetPop import NetPop
-from functions import simpleaxis, smooth_spikes
+from functions import simpleaxis, smooth_spikes, accumulate, init_fig
 
 savefig = False if len(argv) == 1 or int(argv[1]) == 0 else True
 deval = False if len(argv) < 3 else True
 
-pl.rc('figure', facecolor='white', dpi=90, frameon=False)
-pl.rc('font', size=44, **{'family': 'sans-serif', 'sans-serif': ['Computer Modern']})
+init_fig()
 pl.rc('lines', lw=5)
-pl.rc('text', usetex=True)
 pl.rc('legend', **{'fontsize': 30})
-pl.rc('axes', linewidth=2)
-pl.rc('xtick.major', size=10, width=1.5)
-pl.rc('ytick.major', size=10, width=1.5)
-
-
 # colors for colorblind from http://www.cookbook-r.com/Graphs/Colors_(ggplot2)/
-col = ['#56B4E9', '#0072B2',  '#F0E442', '#E69F00', '#CC79A7', '#D55E00', '#009E73', '#999999']
+col = ['#56B4E9', '#0072B2',  '#F0E442', '#E69F00',
+       '#CC79A7', '#D55E00', '#009E73', '#999999']
 
 
 def runU(W, uinit, step, rate=100, T=700, tm=50, ts=2, reset=3, delay=0):
@@ -43,12 +37,6 @@ def runU(W, uinit, step, rate=100, T=700, tm=50, ts=2, reset=3, delay=0):
             (.1 + .65 * np.exp(-(t * step - 250) ** 2 / tau_r ** 2))
         spikes[t] = np.random.rand(K) < step * u
     return spikes
-
-
-def accumulate(values, start=0):
-    for v in values:
-        start += v
-        yield start
 
 
 def get_t(x, c):

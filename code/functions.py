@@ -3,6 +3,17 @@ import pylab as pl
 from scipy.signal import convolve
 
 
+def init_fig():
+    pl.rc('figure', facecolor='white', dpi=90, frameon=False)
+    pl.rc('font', size=44, **{'family': 'sans-serif', 'sans-serif': ['Computer Modern']})
+    pl.rc('lines', lw=4)
+    pl.rc('text', usetex=True)
+    pl.rc('legend', **{'fontsize': 32})
+    pl.rc('axes', linewidth=2)
+    pl.rc('xtick.major', size=10, width=1.5)
+    pl.rc('ytick.major', size=10, width=1.5)
+
+
 def simpleaxis(ax):
     ax.spines['top'].set_visible(False)
     ax.spines['right'].set_visible(False)
@@ -29,3 +40,9 @@ def smooth_spikes(spikes, sigma, step):
                              1000 * np.exp(-i ** 2 / (2 * (sigma / step) ** 2))
                              for i in range(int(-5 * sigma / step),
                                             int(5 * sigma / step + 1))], 'same')
+
+
+def accumulate(values, start=0):
+    for v in values:
+        start += v
+        yield start
