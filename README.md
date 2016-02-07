@@ -1,5 +1,5 @@
 # Goal-directed decision making with spiking neurons
-Supplementary material for the paper "Goal-directed decision making with spiking neurons"
+Supplementary material for the paper "Goal-directed decision making with spiking neurons". [J Neurosci, 36(5): 1529-1546, 2016](http://www.jneurosci.org/content/36/5/1529.full)
 
 ### Requirements
 The scripts were tested on Linux and MacOS with the following software installed
